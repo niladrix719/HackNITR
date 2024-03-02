@@ -6,6 +6,10 @@ export default {
 			fontFamily: {
 				roboto: ["Roboto", "sans-serif"],
 			},
+			backgroundImage: (theme) => ({
+				"hero-pattern":
+					"url('https://png.pngtree.com/illustration/20190226/ourlarge/pngtree-illustration-field-night-landscape-image_3503.jpg')",
+			}),
 		},
 	},
 	plugins: [],

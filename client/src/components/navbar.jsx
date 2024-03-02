@@ -3,7 +3,7 @@ import React, { Component } from "react";
 const Navbar = () => {
 	return (
 		<>
-			<nav className='flex w-full h-16 bg-slate-800 text-white font-roboto text-xl'>
+			<nav className='flex w-full h-16 bg-slate-900 text-white font-roboto text-xl'>
 				<img src='' alt='' />
 				<div></div>
 				<ul className='flex justify-around items-center m-auto w-full'>
