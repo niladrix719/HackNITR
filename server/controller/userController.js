@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 const zod = require("zod");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-const { SECRET_KEY, SALT } = process.env;
+const {
+  SECRET_KEY = "lj#on-Se~gr",
+  SALT = "Qsplbz4hg!-$OF[3;)X1Y?2(jH#UceLq",
+} = process.env;
 
 const schemaValidate = zod.string().email();
 
@@ -12,13 +15,15 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).send({ message: "invalid email or password" });
+      return res.status(401).send({ message: "Invalid Credentials" });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).send({ message: "invalid email or password" });
+      return res.status(401).send({ message: "Invalid Credentials" });
     }
-    const token = jwt.sign({ email: user.email }, SECRET_KEY, { expiresIn: "7d" });
+    const token = jwt.sign({ email: user.email }, SECRET_KEY, {
+      expiresIn: "7d",
+    });
     res.status(200).json({ token });
   } catch (error) {
     console.log(error);
@@ -30,11 +35,11 @@ const signup = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      return res.status(409).send({ message: "User already exists" });
+      login(req, res);
+      return;
     }
     const mail = req.body.email;
     const check = schemaValidate.safeParse(mail);
-    console.log(check);
     if (check.success) {
       const salt = await bcrypt.genSalt(Number(SALT));
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -56,6 +61,7 @@ const signup = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).send({ message: "Internal Server Error" });
   }
 };
