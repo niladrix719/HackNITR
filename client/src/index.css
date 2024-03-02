@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container-custom {
+  width: min(100%, 60rem);
+  margin-inline: auto;
+}
+
+.container-custom-xs {
+  width: min(100%, 40rem);
+  margin-inline: auto;
+}
